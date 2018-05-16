@@ -202,9 +202,9 @@ class starfire():
                 plot_loss(self.losses)
                 plot_gen(self.kory)
                 logging.info('Saving Models')
-                self.kory.save('models/kory.h5')
-                self.anders.save('models/anders.h5')
-                self.koriandr.save('models/koriandr.h5')
+                self.kory.save_weights('models/kory.h5')
+                self.anders.save_weights('models/anders.h5')
+                self.koriandr.save_weights('models/koriandr.h5')
 
     def make_trainable(self, val):
         '''
@@ -217,3 +217,11 @@ class starfire():
         self.anders.trainable = val
         for l in self.anders.layers:
             self.anders.trainable = val
+
+    def load(self):
+        '''
+        Load weights from local
+        '''
+        self.kory.load_weights('models/kory.h5')
+        self.anders.load_weights('models/anders.h5')
+        self.koriandr.load_weights('models/koriandr.h5')

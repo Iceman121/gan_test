@@ -11,6 +11,8 @@ Created on Wed May 16 12:46:00 2018
 import logging
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
+sns.set()
 
 # =============================================================================
 # Chapter 1: Setting Logging Parameters
@@ -54,7 +56,7 @@ def plot_gen(generator, n_ex=16, dim=(4, 4), figsize=(10, 10)):
     plt.figure(figsize=figsize)
     for i in range(generated_images.shape[0]):
         plt.subplot(dim[0], dim[1], i+1)
-        img = generated_images[i, 0, :, :]
+        img = generated_images[i, :, :, 0].reshape([28, 28])
         plt.imshow(img)
         plt.axis('off')
     plt.savefig('reports/figures/generated.png')

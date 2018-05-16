@@ -9,6 +9,7 @@ Created on Wed May 16 15:30:27 2018
 # Chapter 0: Import Modules
 # =============================================================================
 import logging
+import sys
 
 from src.data.read_images import zatanna
 from src.models.train_model import starfire
@@ -26,16 +27,23 @@ logging.basicConfig(filename='reports/main.log',
 # =============================================================================
 # Chapter 2: Main
 # =============================================================================
-def main():
+def main(mode):
     try:
         logging.info('Setting up data')
         raw_data = zatanna()
         raw_data.use_mnist()
-
-        logging.info('Initializing GAN')
-        model = starfire(raw_data.X_train.shape[1:])
-        model.pretrain_discriminator(raw_data.X_train)
-        model.train_gan(raw_data.X_train)
+        if mode == 'new':
+            logging.info('Initializing GAN')
+            model = starfire(raw_data.X_train.shape[1:])
+            model.pretrain_discriminator(raw_data.X_train)
+            model.train_gan(raw_data.X_train)
+        elif mode == 'load':
+            logging.info('Initializing GAN')
+            model = starfire(raw_data.X_train.shape[1:])
+            logging.info('Loading weights')
+            model.load()
+        else:
+            assert False, "Use a valid argument, dumbass!"
         plot_loss(model.losses)
         plot_gen(model.kory)
     except Exception as e:
@@ -46,4 +54,5 @@ def main():
 # Chapter 3: Call Main
 # =============================================================================
 if __name__ == '__main__':
-    main()
+    mode = sys.argv[1]
+    main(mode)

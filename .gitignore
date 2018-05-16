@@ -47,6 +47,7 @@ coverage.xml
 *.mo
 *.pot
 *.png
+*.h5
 
 # Django stuff:
 *.log
